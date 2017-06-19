@@ -44,256 +44,257 @@ import cc.xehoth.graphviz.Main;
 import cc.xehoth.graphviz.tool.Tools;
 
 public class MainFrame extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	private Runtime runtime;
-	private Process process;
-	private String DEFAULT_EXEC = "dot -Kdot -Tpng tmp.dot -o tmp.png";
+    private Runtime runtime;
+    private Process process;
+    
+    private String DEFAULT_EXEC = "dot -Kdot -Tpng tmp.dot -o tmp.png";
 
-	private Font buttonFont = new Font("Consolas", Font.PLAIN, 14);
-	private Font checkBoxFont = new Font("Consolas", Font.PLAIN, 13);
+    private Font buttonFont = new Font("Consolas", Font.PLAIN, 14);
+    private Font checkBoxFont = new Font("Consolas", Font.PLAIN, 13);
 
-	private String WINDOWS_STYLE = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+    private String WINDOWS_STYLE = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
 
-	private Container container = null;
+    private Container container = null;
 
-	private JButton export;
-	private JButton paint;
+    private JButton export;
+    private JButton paint;
 
-	private JCheckBox directed;
-	private JCheckBox weight;
+    private JCheckBox directed;
+    private JCheckBox weight;
 
-	private JTextArea textArea;
-	private JScrollPane scroll;
+    private JTextArea textArea;
+    private JScrollPane scroll;
 
-	private JLabel imageLabel;
-	
-	public MainFrame(int w, int h) {
-		init(w, h);
+    private JLabel imageLabel;
+    
+    public MainFrame(int w, int h) {
+        init(w, h);
 
-		addExportButton();
-		addTextArea();
-		addCheckBox();
-		addPaintButton();
+        addExportButton();
+        addTextArea();
+        addCheckBox();
+        addPaintButton();
 
-		container.add(imageLabel);
-		container.add(scroll);
-		container.add(export);
-		container.add(paint);
-		container.add(directed);
-		container.add(weight);
+        container.add(imageLabel);
+        container.add(scroll);
+        container.add(export);
+        container.add(paint);
+        container.add(directed);
+        container.add(weight);
 
-		runtime = Runtime.getRuntime();
-		this.setAutoRequestFocus(true);
-		this.setVisible(true);
-		this.requestFocus();
+        runtime = Runtime.getRuntime();
+        this.setAutoRequestFocus(true);
+        this.setVisible(true);
+        this.requestFocus();
 
-		this.addComponentListener(new ComponentAdapter() {
+        this.addComponentListener(new ComponentAdapter() {
 
-			@Override
-			public void componentResized(ComponentEvent e) {
-				double scaleX = (double) getWidth() / Main.DEFAULT_WIDTH,
-						scaleY = (double) getHeight() / Main.DEFAULT_HEIGHT;
-				paint.setBounds((int) (750 * scaleX), (int) (10 * scaleY), (int) (80 * scaleX), (int) (30 * scaleY));
+            @Override
+            public void componentResized(ComponentEvent e) {
+                double scaleX = (double) getWidth() / Main.DEFAULT_WIDTH,
+                        scaleY = (double) getHeight() / Main.DEFAULT_HEIGHT;
+                paint.setBounds((int) (750 * scaleX), (int) (10 * scaleY), (int) (80 * scaleX), (int) (30 * scaleY));
 
-				imageLabel.setBounds((int) (0 * scaleX), (int) (0 * scaleY), (int) (520 * scaleX),
-						(int) (680 * scaleY));
-				directed.setBounds((int) (635 * scaleX), (int) (17 * scaleY), (int) (100 * scaleX),
-						(int) (20 * scaleY));
-				weight.setBounds((int) (530 * scaleX), (int) (17 * scaleY), (int) (100 * scaleX), (int) (20 * scaleY));
-				textArea.setBounds((int) (0 * scaleX), (int) (0 * scaleY), (int) (360 * scaleX), (int) (630 * scaleY));
-				scroll.setBounds((int) (525 * scaleX), (int) (50 * scaleY), (int) (415 * scaleX), (int) (630 * scaleY));
-				export.setBounds((int) (855 * scaleX), (int) (10 * scaleY), (int) (80 * scaleX), (int) (30 * scaleY));
-				if (imageLabel.getIcon() != null) {
-					updateAndRepaint();
-				}
-			}
-		});
-	}
+                imageLabel.setBounds((int) (0 * scaleX), (int) (0 * scaleY), (int) (520 * scaleX),
+                        (int) (680 * scaleY));
+                directed.setBounds((int) (635 * scaleX), (int) (17 * scaleY), (int) (100 * scaleX),
+                        (int) (20 * scaleY));
+                weight.setBounds((int) (530 * scaleX), (int) (17 * scaleY), (int) (100 * scaleX), (int) (20 * scaleY));
+                textArea.setBounds((int) (0 * scaleX), (int) (0 * scaleY), (int) (360 * scaleX), (int) (630 * scaleY));
+                scroll.setBounds((int) (525 * scaleX), (int) (50 * scaleY), (int) (415 * scaleX), (int) (630 * scaleY));
+                export.setBounds((int) (855 * scaleX), (int) (10 * scaleY), (int) (80 * scaleX), (int) (30 * scaleY));
+                if (imageLabel.getIcon() != null) {
+                    updateAndRepaint();
+                }
+            }
+        });
+    }
 
-	private void addPaintButton() {
-		/* paint button */
-		paint = new JButton("paint");
-		paint.setBounds(750, 10, 80, 30);
-		paint.setFont(buttonFont);
+    private void addPaintButton() {
+        /* paint button */
+        paint = new JButton("paint");
+        paint.setBounds(750, 10, 80, 30);
+        paint.setFont(buttonFont);
 
-		/* image */
-		imageLabel = new JLabel();
-		imageLabel.setBounds(0, 0, 520, 680);
+        /* image */
+        imageLabel = new JLabel();
+        imageLabel.setBounds(0, 0, 520, 680);
 
-		paint.addActionListener(new ActionListener() {
+        paint.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if (!Tools.transform(directed.isSelected(), weight.isSelected(), textArea.getText(),
-							Tools.getDefaultBufferedWriter(), container))
-						return;
-					process = runtime.exec(DEFAULT_EXEC);
-					process.waitFor();
-					if (process.exitValue() != 0) {
-						Tools.showErrorDialog(container, "Invalid Input");
-						return;
-					}
-					updateAndRepaint();
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (!Tools.transform(directed.isSelected(), weight.isSelected(), textArea.getText(),
+                            Tools.getDefaultBufferedWriter(), container))
+                        return;
+                    process = runtime.exec(DEFAULT_EXEC);
+                    process.waitFor();
+                    if (process.exitValue() != 0) {
+                        Tools.showErrorDialog(container, "Invalid Input");
+                        return;
+                    }
+                    updateAndRepaint();
 
-				} catch (IOException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-	}
+                } catch (IOException | InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+    }
 
-	private void addCheckBox() {
-		/* isDirected */
+    private void addCheckBox() {
+        /* isDirected */
 
-		directed = new JCheckBox("isDirected");
-		directed.setBounds(635, 17, 100, 20);
-		directed.setFont(checkBoxFont);
+        directed = new JCheckBox("isDirected");
+        directed.setBounds(635, 17, 100, 20);
+        directed.setFont(checkBoxFont);
 
-		/* hasWight */
+        /* hasWight */
 
-		weight = new JCheckBox("hasWeight");
-		weight.setBounds(530, 17, 100, 20);
-		weight.setFont(checkBoxFont);
-	}
+        weight = new JCheckBox("hasWeight");
+        weight.setBounds(530, 17, 100, 20);
+        weight.setFont(checkBoxFont);
+    }
 
-	private void addTextArea() {
-		/* text area */
-		textArea = new JTextArea();
-		textArea.setLineWrap(true);
-		textArea.setBounds(0, 0, 360, 630);
-		textArea.setWrapStyleWord(true);
-		scroll = new JScrollPane(textArea);
-		scroll.setBounds(525, 50, 415, 630);
+    private void addTextArea() {
+        /* text area */
+        textArea = new JTextArea();
+        textArea.setLineWrap(true);
+        textArea.setBounds(0, 0, 360, 630);
+        textArea.setWrapStyleWord(true);
+        scroll = new JScrollPane(textArea);
+        scroll.setBounds(525, 50, 415, 630);
 
-		final UndoManager undo = new UndoManager();
-		textArea.getDocument().addUndoableEditListener(new UndoableEditListener() {
+        final UndoManager undo = new UndoManager();
+        textArea.getDocument().addUndoableEditListener(new UndoableEditListener() {
 
-			@Override
-			public void undoableEditHappened(UndoableEditEvent e) {
-				undo.addEdit(e.getEdit());
-			}
-		});
+            @Override
+            public void undoableEditHappened(UndoableEditEvent e) {
+                undo.addEdit(e.getEdit());
+            }
+        });
 
-		textArea.getActionMap().put("Undo", new AbstractAction("Undo") {
+        textArea.getActionMap().put("Undo", new AbstractAction("Undo") {
 
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (undo.canUndo()) {
-					undo.undo();
-				}
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (undo.canUndo()) {
+                    undo.undo();
+                }
+            }
+        });
 
-		textArea.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
+        textArea.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
 
-		textArea.getActionMap().put("Redo", new AbstractAction("Redo") {
+        textArea.getActionMap().put("Redo", new AbstractAction("Redo") {
 
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (undo.canRedo()) {
-					undo.redo();
-				}
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (undo.canRedo()) {
+                    undo.redo();
+                }
+            }
+        });
 
-		textArea.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
-	}
+        textArea.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
+    }
 
-	private void addExportButton() {
-		/* export button */
-		export = new JButton("export");
-		export.setBounds(855, 10, 80, 30);
-		export.setFont(buttonFont);
-		export.addActionListener(new ActionListener() {
+    private void addExportButton() {
+        /* export button */
+        export = new JButton("export");
+        export.setBounds(855, 10, 80, 30);
+        export.setFont(buttonFont);
+        export.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if (!Tools.transform(directed.isSelected(), weight.isSelected(), textArea.getText(),
-							Tools.getDefaultBufferedWriter(), container))
-						return;
-					process = runtime.exec(DEFAULT_EXEC);
-					process.waitFor();
-					if (process.exitValue() != 0) {
-						Tools.showErrorDialog(container, "Invalid Input");
-						return;
-					}
-					updateAndRepaint();
-				} catch (IOException | InterruptedException e2) {
-					e2.printStackTrace();
-				}
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (!Tools.transform(directed.isSelected(), weight.isSelected(), textArea.getText(),
+                            Tools.getDefaultBufferedWriter(), container))
+                        return;
+                    process = runtime.exec(DEFAULT_EXEC);
+                    process.waitFor();
+                    if (process.exitValue() != 0) {
+                        Tools.showErrorDialog(container, "Invalid Input");
+                        return;
+                    }
+                    updateAndRepaint();
+                } catch (IOException | InterruptedException e2) {
+                    e2.printStackTrace();
+                }
 
-				Object tmp = JOptionPane.showInputDialog(container, "Please Choose the File Type", "File Type",
-						JOptionPane.QUESTION_MESSAGE, null,
-						new String[] { "svg", "png", "gif", "ps", "ps2", "psd", "svgz", "jpg", "jpeg", "bmp", "canon",
-								"dot", "gv", "xdot", "xdot1.2", "xdot1.4", "cgimage", "cmap", "eps", "exr", "fig", "gd",
-								"gd2", "gtk", "ico", "imap", "cmapx", "imap_np", "cmapx_np", "ismap", "jp2", "jpe",
-								"json", "json0", "dot_json", "xdot_json", "pct", "pict", "pic", "plain", "plain-ext",
-								"pov", "sgi", "tga", "tif", "tiff", "tk", "vml", "vmlz", "vrml", "wbmp", "webp", "xlib",
-								"x11" },
-						"svg");
-				if (tmp == null)
-					return;
-				String fileType = tmp.toString();
-				tmp = JOptionPane.showInputDialog(container, "Please Choose the File Type", "File Type",
-						JOptionPane.QUESTION_MESSAGE, null,
-						new String[] { "dot", "neato", "twopi", "circo", "fdp", "sfdp", "patchwork" }, "dot");
-				if (tmp == null)
-					return;
-				String layoutType = tmp.toString();
-				try {
-					process = runtime
-							.exec("dot -K" + layoutType + " -T" + fileType + " tmp.dot -o " + " export." + fileType);
-					process.waitFor();
-					if (process.exitValue() != 0)
-						Tools.showErrorDialog(container, "Export Failed!");
-				} catch (IOException | InterruptedException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-	}
+                Object tmp = JOptionPane.showInputDialog(container, "Please Choose the File Type", "File Type",
+                        JOptionPane.QUESTION_MESSAGE, null,
+                        new String[] { "svg", "png", "gif", "ps", "ps2", "psd", "svgz", "jpg", "jpeg", "bmp", "canon",
+                                "dot", "gv", "xdot", "xdot1.2", "xdot1.4", "cgimage", "cmap", "eps", "exr", "fig", "gd",
+                                "gd2", "gtk", "ico", "imap", "cmapx", "imap_np", "cmapx_np", "ismap", "jp2", "jpe",
+                                "json", "json0", "dot_json", "xdot_json", "pct", "pict", "pic", "plain", "plain-ext",
+                                "pov", "sgi", "tga", "tif", "tiff", "tk", "vml", "vmlz", "vrml", "wbmp", "webp", "xlib",
+                                "x11" },
+                        "svg");
+                if (tmp == null)
+                    return;
+                String fileType = tmp.toString();
+                tmp = JOptionPane.showInputDialog(container, "Please Choose the File Type", "File Type",
+                        JOptionPane.QUESTION_MESSAGE, null,
+                        new String[] { "dot", "neato", "twopi", "circo", "fdp", "sfdp", "patchwork" }, "dot");
+                if (tmp == null)
+                    return;
+                String layoutType = tmp.toString();
+                try {
+                    process = runtime
+                            .exec("dot -K" + layoutType + " -T" + fileType + " tmp.dot -o " + " export." + fileType);
+                    process.waitFor();
+                    if (process.exitValue() != 0)
+                        Tools.showErrorDialog(container, "Export Failed!");
+                } catch (IOException | InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+    }
 
-	protected void updateAndRepaint() {
-		imageLabel.setIcon(Tools.getScaledImageIcon("tmp.png", imageLabel.getWidth(), imageLabel.getHeight()));
-	}
+    protected void updateAndRepaint() {
+        imageLabel.setIcon(Tools.getScaledImageIcon("tmp.png", imageLabel.getWidth(), imageLabel.getHeight()));
+    }
 
-	private void init(int w, int h) {
-		this.setBounds((Toolkit.getDefaultToolkit().getScreenSize().width - w) / 2,
-				(Toolkit.getDefaultToolkit().getScreenSize().height - h) / 2, w, h);
-		this.setTitle("Visual Graphviz v1.02");
-		this.setFont(buttonFont);
-		this.setLayout(null);
+    private void init(int w, int h) {
+        this.setBounds((Toolkit.getDefaultToolkit().getScreenSize().width - w) / 2,
+                (Toolkit.getDefaultToolkit().getScreenSize().height - h) / 2, w, h);
+        this.setTitle("Visual Graphviz v1.02");
+        this.setFont(buttonFont);
+        this.setLayout(null);
 
-		/* set close operation */
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        /* set close operation */
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		/* set window style */
-		try {
-			UIManager.setLookAndFeel(WINDOWS_STYLE);
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
+        /* set window style */
+        try {
+            UIManager.setLookAndFeel(WINDOWS_STYLE);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
 
-		/* this.setResizable(false); */
+        /* this.setResizable(false); */
 
-		container = this.getContentPane();
-		container.setLayout(null);
-	}
+        container = this.getContentPane();
+        container.setLayout(null);
+    }
 }
