@@ -89,7 +89,8 @@ public class MainFrame extends JFrame {
     private boolean isUpdated = false;
     private boolean firstPainted = false;
     private boolean isCompiled = false;
-    
+    private boolean needPaint = false;
+
     private Config config = null;
 
     private Thread paintThread = new Thread(new Runnable() {
@@ -104,8 +105,10 @@ public class MainFrame extends JFrame {
                             firstPainted = true;
                         isUpdated = false;
                         isPainted = true;
+                        System.out.println("paint");
                     }
                     Thread.sleep(100);
+
                 }
 
             } catch (IOException | InterruptedException e) {
@@ -122,8 +125,9 @@ public class MainFrame extends JFrame {
         public void run() {
             try {
                 while (!isClosing) {
-                    if (!isChanged && textArea.getDocument().getLength() != 0) {
+                    if (!isChanged && needPaint && textArea.getDocument().getLength() != 0) {
                         isPainted = false;
+                        needPaint = false;
                     }
                     for (int i = 0; i < 7;) {
                         isChanged = false;
@@ -382,19 +386,19 @@ public class MainFrame extends JFrame {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                isPainted = isChanged = true;
+                isPainted = isChanged = needPaint = true;
                 isPaintError = false;
             }
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                isPainted = isChanged = true;
+                isPainted = isChanged = needPaint = true;
                 isPaintError = false;
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                isPainted = isChanged = true;
+                isPainted = isChanged = needPaint = true;
                 isPaintError = false;
             }
         });
