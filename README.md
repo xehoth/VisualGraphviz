@@ -19,6 +19,8 @@ Then set them to your system environment.
 - Select `isDirected` if the graph is directed.
 - Input the node of the graph like `u, v, w`.
 
+**The exported image is `export.xxx`**, the program will also create `tmp.png` and `tmp.dot`, you can just ignore them.
+
 ## Preview
 ![Preview](/preview.png)
 
