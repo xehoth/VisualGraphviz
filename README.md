@@ -21,3 +21,8 @@ Then set them to your system environment.
 
 ## Preview
 ![Preview](/preview.png)
+
+## Todo
+- [ ] Optimize the time while painting.
+- [ ] Optimize UI.
+- [ ] Preview more styles that can export.
