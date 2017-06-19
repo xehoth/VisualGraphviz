@@ -26,7 +26,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -71,7 +70,7 @@ public class MainFrame extends JFrame {
 	private JScrollPane scroll;
 
 	private JLabel imageLabel;
-
+	
 	public MainFrame(int w, int h) {
 		init(w, h);
 
@@ -86,7 +85,7 @@ public class MainFrame extends JFrame {
 		container.add(paint);
 		container.add(directed);
 		container.add(weight);
-		
+
 		runtime = Runtime.getRuntime();
 		this.setAutoRequestFocus(true);
 		this.setVisible(true);
@@ -280,8 +279,7 @@ public class MainFrame extends JFrame {
 		this.setTitle("Visual Graphviz v1.02");
 		this.setFont(buttonFont);
 		this.setLayout(null);
-		this.setIconImage(new ImageIcon("src/cc/xehoth/graphviz/assets/icon.jpg").getImage());
-		
+
 		/* set close operation */
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

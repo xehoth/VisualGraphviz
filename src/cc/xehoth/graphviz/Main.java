@@ -22,7 +22,7 @@ import cc.xehoth.graphviz.frame.MainFrame;
 public class Main {
 	public static final int DEFAULT_WIDTH = 960;
 	public static final int DEFAULT_HEIGHT = 720;
-	
+
 	public static void main(String[] args) {
 		new MainFrame(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
