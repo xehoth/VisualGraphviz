@@ -41,6 +41,7 @@ public class Tools {
     public static boolean transform(boolean isDirected, boolean hasWeight, String content, BufferedWriter bw,
             Component container) throws IOException {
         bw.write(isDirected ? "digraph G {\n" : "graph G {\n");
+        bw.write("    bgcolor = \"none\";\n");
         String[] split = content.split("\\s+");
         if (hasWeight) {
             if (split.length % 3 != 0) {
