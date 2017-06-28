@@ -432,7 +432,7 @@ public class MainFrame extends JFrame {
         }
         Object tmp = JOptionPane.showInputDialog(container, "Please Choose the File Type", "File Type",
                 JOptionPane.QUESTION_MESSAGE, null,
-                new String[] { "svg", "png", "gif", "ps", "ps2", "psd", "svgz", "jpg", "jpeg", "bmp", "canon", "dot",
+                new String[] { "svg", "png", "gif", "ps", "ps2", "psd", "pdf", "svgz", "jpg", "jpeg", "bmp", "canon", "dot",
                         "gv", "xdot", "xdot1.2", "xdot1.4", "cgimage", "cmap", "eps", "exr", "fig", "gd", "gd2", "gtk",
                         "ico", "imap", "cmapx", "imap_np", "cmapx_np", "ismap", "jp2", "jpe", "json", "json0",
                         "dot_json", "xdot_json", "pct", "pict", "pic", "plain", "plain-ext", "pov", "sgi", "tga", "tif",
@@ -464,7 +464,7 @@ public class MainFrame extends JFrame {
     private void init(int w, int h) {
         this.setBounds((Toolkit.getDefaultToolkit().getScreenSize().width - w) / 2,
                 (Toolkit.getDefaultToolkit().getScreenSize().height - h) / 2, w, h);
-        this.setTitle("Visual Graphviz v1.03");
+        this.setTitle("Visual Graphviz v1.04");
         this.setFont(buttonFont);
         this.setLayout(null);
 
