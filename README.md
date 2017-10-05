@@ -1,7 +1,7 @@
 # VisualGraphviz
 Preview and export graphs & Automatically draw a [weighted] [directed] graph, based on [graphviz](http://www.graphviz.org/).
 
-Yan also see Chinese Version [here](/README_CN.md).
+You can also see Chinese Version [here](/README_CN.md).
 
 ## Install
 ### Download
