@@ -53,23 +53,11 @@ public class Tools {
             }
             if (isDirected) {
                 for (int i = 0; i < split.length; i += 3) {
-                    bw.write("    ");
-                    bw.write(split[i]);
-                    bw.write(" -> ");
-                    bw.write(split[i + 1]);
-                    bw.write(" [label = ");
-                    bw.write(split[i + 2]);
-                    bw.write("];\n");
+                    bw.write(String.format("    \"%s\" -> \"%s\" [label = \"%s\"];\n", split[i], split[i + 1], split[i + 2]));
                 }
             } else {
                 for (int i = 0; i < split.length; i += 3) {
-                    bw.write("    ");
-                    bw.write(split[i]);
-                    bw.write(" -- ");
-                    bw.write(split[i + 1]);
-                    bw.write(" [label = ");
-                    bw.write(split[i + 2]);
-                    bw.write("];\n");
+                    bw.write(String.format("    \"%s\" -- \"%s\" [label = \"%s\"];\n", split[i], split[i + 1], split[i + 2]));
                 }
             }
         } else {
@@ -82,19 +70,12 @@ public class Tools {
             }
             if (isDirected) {
                 for (int i = 0; i < split.length; i += 2) {
-                    bw.write("    ");
-                    bw.write(split[i]);
-                    bw.write(" -> ");
-                    bw.write(split[i + 1]);
-                    bw.write(";\n");
+                    bw.write(String.format("    \"%s\" -> \"%s\";\n", split[i], split[i + 1]));
                 }
             } else {
                 for (int i = 0; i < split.length; i += 2) {
-                    bw.write("    ");
-                    bw.write(split[i]);
-                    bw.write(" -- ");
-                    bw.write(split[i + 1]);
-                    bw.write(";\n");
+                    bw.write(String.format("    \"%s\" -- \"%s\";\n", split[i], split[i + 1]));
+                    
                 }
             }
         }
